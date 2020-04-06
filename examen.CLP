@@ -47,3 +47,11 @@
 (assert(montacargas ?x 0 0))
 (assert(planta ?x (+ ?y ?peso) 0))
 )
+
+(defrule finalizar
+(planta ?x ?y ?z)
+?f<-(montacargas ?planta ?peso ?destino)
+(test (= ?z 800))
+=>
+(halt)
+)
