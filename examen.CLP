@@ -51,7 +51,7 @@
 (defrule finalizar
 (planta ?x ?y ?z)
 ?f<-(montacargas ?planta ?peso ?destino)
-(test (= ?z 800))
+(test (>= ?y 800))
 =>
 (halt)
 )
