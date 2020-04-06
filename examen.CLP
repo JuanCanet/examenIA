@@ -12,19 +12,16 @@
 (defrule mover-montacargas-arriba
 ?f<-(montacargas ?planta ?peso ?destino)
 (test (< ?planta 4))
-(test (> ?planta 0))
+(test (>= ?planta 0))
 =>
-;(retract ?f)
 (assert(montacargas (+ ?planta 1) ?peso ?destino))
 )
 
 (defrule mover-montacargas-abajo
 ?f<-(montacargas ?planta ?peso ?destino)
-(test (< ?planta 4))
-(test (> ?planta 0))
+(test (= ?planta 4))
 =>
-;(retract ?f)
-(assert(montacargas (- ?planta 1) ?peso ?destino))
+(assert(montacargas 0 ?peso ?destino))
 )
 
 (defrule coger-carga
@@ -32,10 +29,11 @@
 ?f<-(montacargas ?planta ?peso ?destino)
 (test (= ?x ?planta))
 (test (<= (+ ?peso ?y) 650))
+(test (> ?z 0))
+(test (> ?y 0))
 =>
-;(retract ?f)
 (assert(montacargas ?x ?y ?z))
-(assert(planta ?x 0 ?z))
+(assert(planta ?x 0 0))
 )
 
 (defrule dejar-carga
@@ -43,8 +41,9 @@
 ?f<-(montacargas ?planta ?peso ?destino)
 (test (= ?x ?planta))
 (test (= ?x ?destino))
+(test (> ?destino 0))
+(test (> ?peso 0))
 =>
-;(retract ?f)
 (assert(montacargas ?x 0 0))
 (assert(planta ?x (+ ?y ?peso) 0))
 )
